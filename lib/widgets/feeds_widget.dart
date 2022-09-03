@@ -3,7 +3,9 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:store_api/consts/global_colours.dart';
+import 'package:store_api/screens/product_details.dart';
 
 class FeedsWidget extends StatelessWidget {
   const FeedsWidget({Key? key}) : super(key: key);
@@ -20,7 +22,12 @@ class FeedsWidget extends StatelessWidget {
         color: Theme.of(context).cardColor,
         child: InkWell(
           borderRadius: BorderRadius.circular(8.0),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                PageTransition(
+                    child: ProductDetails(), type: PageTransitionType.fade));
+          },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

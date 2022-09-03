@@ -2,7 +2,9 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:store_api/consts/global_colours.dart';
+import 'package:store_api/screens/category_screen.dart';
 import 'package:store_api/screens/feeds_screen.dart';
+import 'package:store_api/screens/users_screen.dart';
 import 'package:store_api/widgets/feeds_widget.dart';
 import 'package:store_api/widgets/sale_widget.dart';
 
@@ -36,8 +38,24 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("HOME"),
-        leading: const Icon(Icons.menu),
-        actions: const [Icon(Icons.shopping_cart_outlined)],
+        leading: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      child: CategoryScreen(), type: PageTransitionType.fade));
+            },
+            child: Icon(Icons.menu)),
+        actions: [
+          InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: UsersScreen (), type: PageTransitionType.fade));
+              },
+              child: Icon(Icons.shopping_cart_outlined))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
