@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
@@ -70,10 +69,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       // productsModel!.category!.name.toString(),
                       "name",
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 20, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(
@@ -155,11 +154,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                     const SizedBox(
                       height: 18,
                     ),
-                    Text(
+                    const Text(
                       // productsModel!.description.toString(),
                       "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       textAlign: TextAlign.start,
-                      style: const TextStyle(fontSize: 25),
+                      style: TextStyle(fontSize: 25),
                     ),
                   ],
                 ),

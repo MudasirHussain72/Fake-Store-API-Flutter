@@ -23,9 +23,9 @@ class UsersWidgets extends StatelessWidget {
         // imageUrl: usersModelProvider.avatar.toString(),
         boxFit: BoxFit.fill,
       ),
-      title: Text("name"),
+      title: const Text("name"),
       //  Text(usersModelProvider.name.toString()),
-      subtitle: Text("data"),
+      subtitle: const Text("data"),
       // Text(usersModelProvider.email.toString()),
       trailing: Text(
         "",

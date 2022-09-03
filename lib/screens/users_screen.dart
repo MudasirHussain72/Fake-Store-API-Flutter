@@ -18,7 +18,7 @@ class _UsersScreenState extends State<UsersScreen> {
         body: ListView.builder(
             itemCount: 10,
             itemBuilder: (context, index) {
-              return UsersWidgets();
+              return const UsersWidgets();
             }));
   }
 }

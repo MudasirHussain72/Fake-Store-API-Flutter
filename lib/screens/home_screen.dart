@@ -2,12 +2,13 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:store_api/consts/global_colours.dart';
+import 'package:store_api/models/products_model.dart';
 import 'package:store_api/screens/category_screen.dart';
 import 'package:store_api/screens/feeds_screen.dart';
 import 'package:store_api/screens/users_screen.dart';
-import 'package:store_api/widgets/feeds_widget.dart';
+import 'package:store_api/services/api_handler.dart';
+import 'package:store_api/widgets/feeds_grid.dart';
 import 'package:store_api/widgets/sale_widget.dart';
-
 import '../widgets/appbar_icons.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController searchController;
+  // List<ProductsModel> productsList = [];
   @override
   void initState() {
     searchController = TextEditingController();
@@ -27,10 +29,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    // ignore: todo
     // TODO: implement dispose
     searchController.dispose();
     super.dispose();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   // ignore: todo
+  //   // TODO: implement didChangeDependencies
+  //   getProducts();
+  //   super.didChangeDependencies();
+  // }
+
+  // Future<void> getProducts() async {
+  //   productsList = await APIHandler.getAllProducts();
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -43,18 +59,20 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.push(
                   context,
                   PageTransition(
-                      child: CategoryScreen(), type: PageTransitionType.fade));
+                      child: const CategoryScreen(),
+                      type: PageTransitionType.fade));
             },
-            child: Icon(Icons.menu)),
+            child: const Icon(Icons.menu)),
         actions: [
           InkWell(
               onTap: () {
                 Navigator.push(
                     context,
                     PageTransition(
-                        child: UsersScreen (), type: PageTransitionType.fade));
+                        child: const UsersScreen(),
+                        type: PageTransitionType.fade));
               },
-              child: Icon(Icons.shopping_cart_outlined))
+              child: const Icon(Icons.shopping_cart_outlined))
         ],
       ),
       body: Padding(
@@ -135,20 +153,43 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: 3,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 0,
-                              mainAxisSpacing: 0,
-                              childAspectRatio: 0.6),
-                      itemBuilder: (context, index) {
-                        return const FeedsWidget();
-                      },
-                    )
+                    // GridView.builder(
+                    //   shrinkWrap: true,
+                    //   physics: const NeverScrollableScrollPhysics(),
+                    //   itemCount: 3,
+                    //   gridDelegate:
+                    //       const SliverGridDelegateWithFixedCrossAxisCount(
+                    //           crossAxisCount: 2,
+                    //           crossAxisSpacing: 0,
+                    //           mainAxisSpacing: 0,
+                    //           childAspectRatio: 0.6),
+                    //   itemBuilder: (context, index) {
+                    //     return const FeedsWidget();
+                    //   },
+                    // )
+
+                    //  // productsList.isEmpty
+                    //     ? Container()
+                    //     : FeedsGridWidget(productsList: productsList)
+                    FutureBuilder<List<ProductsModel>>(
+                        future: APIHandler.getAllProducts(),
+                        builder: ((context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text("an error occured ${snapshot.error}"),
+                            );
+                          } else if (snapshot.data == null) {
+                            return Center(
+                              child: Text("no products has been added yet"),
+                            );
+                          }
+                          return FeedsGridWidget(productsList: snapshot.data!);
+                        }))
                   ],
                 ),
               ),

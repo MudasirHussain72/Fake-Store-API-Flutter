@@ -39,6 +39,7 @@ dependencies:
   iconly: ^1.0.1
   fancy_shimmer_image: ^2.0.2
   page_transition: ^2.0.9
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

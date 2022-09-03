@@ -8,8 +8,8 @@ import 'package:store_api/consts/global_colours.dart';
 import 'package:store_api/screens/product_details.dart';
 
 class FeedsWidget extends StatelessWidget {
-  const FeedsWidget({Key? key}) : super(key: key);
-
+  const FeedsWidget({required this.title, required this.imageUrl});
+  final String title, imageUrl;
   @override
   Widget build(BuildContext context) {
     // final productsModelProvider = Provider.of<ProductsModel>(context);
@@ -68,7 +68,7 @@ class FeedsWidget extends StatelessWidget {
                     size: 28,
                   ),
                   // imageUrl: productsModelProvider.images![0],
-                  imageUrl: 'https://i.ibb.co/vwB46Yq/shoes.png',
+                  imageUrl: imageUrl,
                   boxFit: BoxFit.fill,
                 ),
               ),
@@ -76,7 +76,7 @@ class FeedsWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "title",
+                  title,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: const TextStyle(
