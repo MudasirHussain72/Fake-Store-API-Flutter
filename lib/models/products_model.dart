@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:store_api/models/category_model.dart';
 
-class ProductsModel {
+class ProductsModel with ChangeNotifier {
   int? id;
   String? title;
   int? price;

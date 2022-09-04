@@ -4,15 +4,17 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:store_api/consts/global_colours.dart';
+import 'package:store_api/models/products_model.dart';
 import 'package:store_api/screens/product_details.dart';
 
 class FeedsWidget extends StatelessWidget {
-  const FeedsWidget({required this.title, required this.imageUrl});
-  final String title, imageUrl;
+  const FeedsWidget({Key});
+  // final String title, imageUrl;
   @override
   Widget build(BuildContext context) {
-    // final productsModelProvider = Provider.of<ProductsModel>(context);
+    final productsModelProvider = Provider.of<ProductsModel>(context);
 
     Size size = MediaQuery.of(context).size;
     return Padding(
@@ -45,7 +47,7 @@ class FeedsWidget extends StatelessWidget {
                             children: <TextSpan>[
                               TextSpan(
                                   // text: "${productsModelProvider.price}",
-                                  text: "168.00",
+                                  text: productsModelProvider.price.toString(),
                                   style: TextStyle(
                                       color: lightTextColor,
                                       fontWeight: FontWeight.w600)),
@@ -68,7 +70,7 @@ class FeedsWidget extends StatelessWidget {
                     size: 28,
                   ),
                   // imageUrl: productsModelProvider.images![0],
-                  imageUrl: imageUrl,
+                  imageUrl: productsModelProvider.images![0],
                   boxFit: BoxFit.fill,
                 ),
               ),
@@ -76,7 +78,7 @@ class FeedsWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  title,
+                  productsModelProvider.title.toString(),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: const TextStyle(
