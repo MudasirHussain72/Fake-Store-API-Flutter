@@ -12,18 +12,42 @@ class FeedsScreen extends StatefulWidget {
 }
 
 class _FeedsScreenState extends State<FeedsScreen> {
+  final ScrollController _scrollController = ScrollController();
   List<ProductsModel> productsList = [];
+  int limit = 10;
+  // bool _isLoading = false;
+  bool _isLimit = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    getProducts();
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
-    // ignore: todo
-    // TODO: implement didChangeDependencies
-    getProducts();
+    // getProducts();
+    _scrollController.addListener(() async {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        // _isLoading = true;
+        // print("_isLoading $_isLoading");
+        limit += 10;
+        print("limit $limit");
+        if (limit == 30) {
+          _isLimit = true;
+          setState(() {});
+          return;
+        }
+        await getProducts();
+        // _isLoading = false;
+      }
+    });
     super.didChangeDependencies();
   }
 
   Future<void> getProducts() async {
-    productsList = await APIHandler.getAllProducts();
+    productsList = await APIHandler.getAllProducts(limit: limit.toString());
     setState(() {});
   }
 
@@ -34,24 +58,36 @@ class _FeedsScreenState extends State<FeedsScreen> {
         title: const Text("All Products"),
       ),
       body: productsList.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           :
           // FeedsGridWidget(productsList: productsList)
-          GridView.builder(
-              // shrinkWrap: true,
-              // physics: const NeverScrollableScrollPhysics(),
-              itemCount: productsList.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 0,
-                  childAspectRatio: 0.6),
-              itemBuilder: (context, index) {
-                return ChangeNotifierProvider.value(
-                  value: productsList[index],
-                  child: const FeedsWidget(),
-                );
-              },
+          SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: [
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: productsList.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 0,
+                            mainAxisSpacing: 0,
+                            childAspectRatio: 0.6),
+                    itemBuilder: (context, index) {
+                      return ChangeNotifierProvider.value(
+                        value: productsList[index],
+                        child: const FeedsWidget(),
+                      );
+                    },
+                  ),
+                  if (!_isLimit)
+                    Center(
+                      child: CircularProgressIndicator(),
+                    )
+                ],
+              ),
             ),
     );
   }

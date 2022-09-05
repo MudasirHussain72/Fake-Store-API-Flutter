@@ -17,7 +17,7 @@ class CategoryScreen extends StatelessWidget {
             future: APIHandler.getAllCategories(),
             builder: ((context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasError) {
@@ -25,7 +25,7 @@ class CategoryScreen extends StatelessWidget {
                   child: Text("an error occured ${snapshot.error}"),
                 );
               } else if (snapshot.data == null) {
-                return Center(
+                return const Center(
                   child: Text("no products has been added yet"),
                 );
               }
@@ -40,7 +40,7 @@ class CategoryScreen extends StatelessWidget {
                     childAspectRatio: 1),
                 itemBuilder: (context, index) {
                   return ChangeNotifierProvider.value(
-                      value: snapshot.data![index], child: CategoryWidget());
+                      value: snapshot.data![index], child: const CategoryWidget());
                 },
               );
             })));

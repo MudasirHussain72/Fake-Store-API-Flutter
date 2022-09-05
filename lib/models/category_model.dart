@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:store_api/models/products_model.dart';
 
 class CategoriesModel with ChangeNotifier {
   int? id;

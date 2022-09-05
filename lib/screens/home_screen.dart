@@ -29,24 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    // ignore: todo
-    // TODO: implement dispose
     searchController.dispose();
     super.dispose();
   }
-
-  // @override
-  // void didChangeDependencies() {
-  //   // ignore: todo
-  //   // TODO: implement didChangeDependencies
-  //   getProducts();
-  //   super.didChangeDependencies();
-  // }
-
-  // Future<void> getProducts() async {
-  //   productsList = await APIHandler.getAllProducts();
-  //   setState(() {});
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -153,30 +138,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    // GridView.builder(
-                    //   shrinkWrap: true,
-                    //   physics: const NeverScrollableScrollPhysics(),
-                    //   itemCount: 3,
-                    //   gridDelegate:
-                    //       const SliverGridDelegateWithFixedCrossAxisCount(
-                    //           crossAxisCount: 2,
-                    //           crossAxisSpacing: 0,
-                    //           mainAxisSpacing: 0,
-                    //           childAspectRatio: 0.6),
-                    //   itemBuilder: (context, index) {
-                    //     return const FeedsWidget();
-                    //   },
-                    // )
-
-                    //  // productsList.isEmpty
-                    //     ? Container()
-                    //     : FeedsGridWidget(productsList: productsList)
                     FutureBuilder<List<ProductsModel>>(
-                        future: APIHandler.getAllProducts(),
+                        future: APIHandler.getAllProducts(limit: "3"),
                         builder: ((context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           } else if (snapshot.hasError) {
@@ -184,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text("an error occured ${snapshot.error}"),
                             );
                           } else if (snapshot.data == null) {
-                            return Center(
+                            return const Center(
                               child: Text("no products has been added yet"),
                             );
                           }

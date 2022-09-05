@@ -10,6 +10,7 @@ import 'package:store_api/models/products_model.dart';
 import 'package:store_api/screens/product_details.dart';
 
 class FeedsWidget extends StatelessWidget {
+  // ignore: avoid_types_as_parameter_names, non_constant_identifier_names, use_key_in_widget_constructors
   const FeedsWidget({Key});
   // final String title, imageUrl;
   @override
@@ -28,7 +29,7 @@ class FeedsWidget extends StatelessWidget {
             Navigator.push(
                 context,
                 PageTransition(
-                    child: ProductDetails(), type: PageTransitionType.fade));
+                    child: ProductDetails(id: productsModelProvider.id.toString(),), type: PageTransitionType.fade));
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
